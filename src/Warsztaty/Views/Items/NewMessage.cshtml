@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Warsztaty.Data.Models.Item
+
+<html>
+<body>
+    <br />
+        <form asp-action="CreateMessage">
+            <div class="form-group">
+                <label for="inputTitle">Title</label>
+                @Html.TextBoxFor(m => m.Title)
+            </div>
+            <div class="form-group">
+                <label for="inputMessage">Message</label>
+                @Html.TextAreaFor(m => m.Content)
+            </div>
+            <input type="submit" />
+        </form>
+</body>
+</html>

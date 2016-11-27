@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Warsztaty.Data.Models.Item>
+
+
+<html>
+<body>
+    <ul>
+        
+            @foreach (var item in Model)
+            {
+                <li>
+                    <p>@Html.DisplayFor(modelItem => item.Title)</p> 
+                    <p>@Html.DisplayFor(modelItem => item.CreatedAt)</p>
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Content)
+
+                    
+                </li>
+            }
+    </ul>
+</body>
+</html>

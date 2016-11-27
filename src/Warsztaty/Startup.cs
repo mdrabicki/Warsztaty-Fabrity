@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Warsztaty.Data;
+using System.Reflection;
 
 namespace Warsztaty
 {
@@ -33,8 +36,12 @@ namespace Warsztaty
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+
+            var connection = @"Server = DESKTOP-QM9LQEE\SQLEXPRESS; Database = Warsztaty; Trusted_Connection = True; ";
+            services.AddDbContext < ItemsDbContext> (options => options.UseSqlServer(connection));
 
             services.AddMvc();
         }
@@ -61,11 +68,16 @@ namespace Warsztaty
 
             app.UseStaticFiles();
 
+
+
+
+
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Items}/{action=List}/{id?}");
             });
         }
     }
