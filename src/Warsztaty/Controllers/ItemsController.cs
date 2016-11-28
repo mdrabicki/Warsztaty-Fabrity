@@ -50,8 +50,9 @@ namespace Warsztaty.Controllers
             {
                 _db.Add(model);
                 _db.SaveChanges();
+                return View("List", _db.Items.ToList());
             }
-            return View("List", _db.Items.ToList());
+            return RedirectToAction("NewMessage");
         }
 
     }
