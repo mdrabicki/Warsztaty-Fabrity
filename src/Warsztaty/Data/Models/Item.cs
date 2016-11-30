@@ -9,7 +9,7 @@ namespace Warsztaty.Data.Models
     public class Item
     {
         public int Id { get; set; }
-        [StringLength(160),Required(ErrorMessage = "Pole nie może zostać puste"),Display(Name = "Title of message")]
+        [StringLength(160),MinLength(5), Required(ErrorMessage = "Pole nie może zostać puste"),Display(Name = "Title")]
         public string Title { get; set; }
         
         public string Content { get; set; }
