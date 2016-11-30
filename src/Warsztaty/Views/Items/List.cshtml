@@ -3,19 +3,26 @@
 
 <html>
 <body>
-    <ul>
+    <br />
         
             @foreach (var item in Model)
             {
-                <li>
-                    <p>@Html.DisplayFor(modelItem => item.Title)</p> 
-                    <p>@Html.DisplayFor(modelItem => item.CreatedAt)</p>
-                    <br />
-                    @Html.DisplayFor(modelItem => item.Content)
+                
+                <form asp-action="DeleteItem" asp-route-id="@item.Id">
+                   
 
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Title)  @Html.DisplayFor(modelItem => item.CreatedAt, "{0:dd/MM/yyyy}")      <input type="submit" value="usun">
+                        </p>
+                        <br />
+                        @Html.DisplayFor(modelItem => item.Content)
+
+
+                     
                     
-                </li>
+                </form>
+                <br />
             }
-    </ul>
+    
 </body>
 </html>

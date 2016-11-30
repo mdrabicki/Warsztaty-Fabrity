@@ -38,21 +38,29 @@ namespace Warsztaty.Controllers
            
            return View();
         }
-        [HttpGet]
-        public IActionResult NewMessage()
+        
+        public IActionResult NewMessage(Item model)
         {
-            return View();
+            return View(model);
         }
-        [HttpPost]
+        
         public IActionResult CreateMessage(Item model)
         {
             if (ModelState.IsValid)
             {
+                model.CreatedAt = DateTime.Now;
                 _db.Add(model);
                 _db.SaveChanges();
                 return View("List", _db.Items.ToList());
             }
-            return RedirectToAction("NewMessage");
+            return RedirectToAction("NewMessage",model);
+        }
+        public IActionResult DeleteItem(int? id)
+        {
+            Item item = _db.Items.Find(id);
+            _db.Remove(item);
+            _db.SaveChanges();
+            return RedirectToAction("List");
         }
 
     }

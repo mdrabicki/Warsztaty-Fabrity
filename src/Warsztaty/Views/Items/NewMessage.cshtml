@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label> Title</label>
                 
-                @Html.ValidationMessageFor(m => m.Title)
+              @*  @Html.ValidationMessageFor(m => m.Title) *@
                 @Html.TextBoxFor(m => m.Title)
                 <span asp-validation-for="Title" class="text-danger"> </span>
             </div>
