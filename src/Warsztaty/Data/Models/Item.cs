@@ -11,7 +11,6 @@ namespace Warsztaty.Data.Models
         public int Id { get; set; }
         [StringLength(160),MinLength(5), Required(ErrorMessage = "Pole nie może zostać puste"),Display(Name = "Title")]
         public string Title { get; set; }
-        
         public string Content { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CreatedAt { get; set; }

@@ -7,12 +7,13 @@ using Warsztaty.Data.Models;
 
 namespace Warsztaty.Data
 {
-    public class ItemsDbContext:DbContext
+    public partial class ItemsDbContext:DbContext
     {
-        public DbSet<Item> Items { get; set; }
-         public  ItemsDbContext(DbContextOptions<ItemsDbContext> options)
+        public virtual DbSet<Item> Items { get; set; }
+        public  ItemsDbContext(DbContextOptions<ItemsDbContext> options)
             : base(options)
         {
+            
         }
     }
 }

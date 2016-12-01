@@ -7,9 +7,8 @@
         
             @foreach (var item in Model)
             {
-                
+              <div class="bordered">
                 <form asp-action="DeleteItem" asp-route-id="@item.Id">
-                   
 
                         <p>
                             @Html.DisplayFor(modelItem => item.Title)  @Html.DisplayFor(modelItem => item.CreatedAt, "{0:dd/MM/yyyy}")      <input type="submit" value="usun">
@@ -21,8 +20,10 @@
                      
                     
                 </form>
-                <br />
-            }
-    
+                  </div>
+
+                      <br />
+                      }
+
 </body>
 </html>

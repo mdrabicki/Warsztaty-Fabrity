@@ -14,11 +14,11 @@ namespace Warsztaty.Controllers
      public class ItemsController : Controller
     {
 
-        private ItemsDbContext _db;
+        private ItemsRepository itemsRespository;
 
-        public ItemsController(ItemsDbContext db)
+        public ItemsController(ItemsDbContext _db)
         {
-            _db = db;
+            this.itemsRespository = new ItemsRepository(_db);
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -29,37 +29,33 @@ namespace Warsztaty.Controllers
         public IActionResult List()
         {
             
-            return View(_db.Items.ToList());
+            return View(itemsRespository.GetItemsList());
         }
        // [HttpGet]
-        public IActionResult Edit(Item model)
+        public IActionResult EditItem(Item model)
         {
        
            
            return View();
         }
         
-        public IActionResult NewMessage(Item model)
+        public IActionResult NewMessageForm(Item model)
         {
             return View(model);
         }
         
-        public IActionResult CreateMessage(Item model)
+        public IActionResult CreateItem(Item model)
         {
             if (ModelState.IsValid)
             {
-                model.CreatedAt = DateTime.Now;
-                _db.Add(model);
-                _db.SaveChanges();
-                return View("List", _db.Items.ToList());
+                itemsRespository.CreateItem(model);
+                return View("List");
             }
             return RedirectToAction("NewMessage",model);
         }
-        public IActionResult DeleteItem(int? id)
+        public IActionResult DeleteItem(int id)
         {
-            Item item = _db.Items.Find(id);
-            _db.Remove(item);
-            _db.SaveChanges();
+            itemsRespository.DeleteItem(id);
             return RedirectToAction("List");
         }
 
