@@ -14,7 +14,7 @@ namespace Warsztaty.Data.Models
         {
             _db = db;
         }
-        public IEnumerable GetUserItems(int id)
+        public IEnumerable<Item> GetUserItems(int id)
         {
             //TODO
             return null;
@@ -22,7 +22,7 @@ namespace Warsztaty.Data.Models
         }
         public void EditItem(int id) {
         }
-        public IEnumerable GetItemsList()
+        public IEnumerable<Item> GetItemsList()
         {
             return _db.Items.ToList();
         }
@@ -32,11 +32,25 @@ namespace Warsztaty.Data.Models
             _db.Add(item);
             _db.SaveChanges();
         }
+
+        public ListPageModel GetItemsListAndModel()
+        {
+            ListPageModel pageModel= new ListPageModel();
+            pageModel.List = GetItemsList();
+            pageModel.Model = new Item();
+            return pageModel;
+
+        }
+
         public void DeleteItem(int id)
         {
             Item item = _db.Items.Find(id);
             _db.Remove(item);
             _db.SaveChanges();
+        }
+        public Item GetItemModel()
+        {
+            return new Item();
         }
     }
 }

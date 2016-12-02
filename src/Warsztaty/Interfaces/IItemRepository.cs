@@ -12,7 +12,7 @@ namespace Warsztaty.Interfaces
         void CreateItem(Item item);
         void DeleteItem(int id);
         void EditItem(int id);
-        IEnumerable GetUserItems(int id);
-        IEnumerable GetItemsList();
+        IEnumerable<Item> GetUserItems(int id);
+        IEnumerable<Item> GetItemsList();
     }
 }

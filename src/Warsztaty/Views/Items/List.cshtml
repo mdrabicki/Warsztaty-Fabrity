@@ -1,11 +1,17 @@
-﻿@model IEnumerable<Warsztaty.Data.Models.Item>
+﻿@model Warsztaty.Data.ListPageModel
 
 
 <html>
 <body>
     <br />
+    <form asp-action="QuickNote">
+        @Html.TextBoxFor(m => m.Model.Title)<br />
+        @Html.TextBoxFor(m => m.Model.Content)<br />
+        <input type="submit" />
+    </form>
+    <br />
         
-            @foreach (var item in Model)
+            @foreach (var item in Model.List)
             {
               <div class="bordered">
                 <form asp-action="DeleteItem" asp-route-id="@item.Id">

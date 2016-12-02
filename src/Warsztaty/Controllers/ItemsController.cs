@@ -29,7 +29,7 @@ namespace Warsztaty.Controllers
         public IActionResult List()
         {
             
-            return View(itemsRespository.GetItemsList());
+            return View(itemsRespository.GetItemsListAndModel());
         }
        // [HttpGet]
         public IActionResult EditItem(Item model)
@@ -49,14 +49,18 @@ namespace Warsztaty.Controllers
             if (ModelState.IsValid)
             {
                 itemsRespository.CreateItem(model);
-                return View("List");
+                return RedirectToAction("List");
             }
-            return RedirectToAction("NewMessage",model);
+            return RedirectToAction("NewMessageForm",model);
         }
         public IActionResult DeleteItem(int id)
         {
             itemsRespository.DeleteItem(id);
             return RedirectToAction("List");
+        }
+        public IActionResult QuickNote(ListPageModel pageModel)
+        {
+            return RedirectToAction("CreateItem", pageModel.Model);
         }
 
     }
