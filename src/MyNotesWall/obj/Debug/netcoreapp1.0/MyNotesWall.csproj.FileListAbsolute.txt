@@ -1,0 +1,6 @@
+E:\Projekty\ASP\MyNotesWall\src\MyNotesWall\obj\Debug\netcoreapp1.0\MyNotesWall.csprojResolveAssemblyReference.cache
+E:\Projekty\ASP\MyNotesWall\src\MyNotesWall\obj\Debug\netcoreapp1.0\MyNotesWall.AssemblyInfo.cs
+E:\Projekty\ASP\MyNotesWall\src\MyNotesWall\bin\Debug\netcoreapp1.0\MyNotesWall.dll
+E:\Projekty\ASP\MyNotesWall\src\MyNotesWall\bin\Debug\netcoreapp1.0\MyNotesWall.pdb
+E:\Projekty\ASP\MyNotesWall\src\MyNotesWall\obj\Debug\netcoreapp1.0\MyNotesWall.dll
+E:\Projekty\ASP\MyNotesWall\src\MyNotesWall\obj\Debug\netcoreapp1.0\MyNotesWall.pdb
