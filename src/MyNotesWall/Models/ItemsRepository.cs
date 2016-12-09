@@ -12,9 +12,9 @@ namespace MyNotesWall.Models
 { 
     public class ItemsRepository:IItemRepository
     {
-        private ItemsDbContext _db;
+        private ApplicationDbContext _db;
         private IHttpContextAccessor httpContextAccessor;
-        public ItemsRepository(ItemsDbContext db, IHttpContextAccessor httpContextAccessor)
+        public ItemsRepository(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;
             _db = db;

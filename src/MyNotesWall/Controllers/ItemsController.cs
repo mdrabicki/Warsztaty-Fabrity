@@ -16,7 +16,7 @@ namespace MyNotesWall.Controllers
         private ItemsRepository itemsRespository;
         private IHttpContextAccessor httpContextAccessor;
 
-        public ItemsController(ItemsDbContext _db, IHttpContextAccessor httpContextAccessor)
+        public ItemsController(ApplicationDbContext _db, IHttpContextAccessor httpContextAccessor)
         {
             this.itemsRespository = new ItemsRepository(_db, httpContextAccessor);
             this.httpContextAccessor = httpContextAccessor;
