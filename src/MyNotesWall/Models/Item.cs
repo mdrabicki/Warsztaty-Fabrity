@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyNotesWall.Models
+
 {
     public class Item
     {
@@ -16,6 +18,13 @@ namespace MyNotesWall.Models
         public DateTime CreatedAt { get; set; }
         public string UserId { get; set; }
         public int CategoryId { get; set; }
+        public int WallID { get; set; }
+        
+        [ForeignKey("WallRefId")]
+        public virtual Wall Wall { get; set; }
+        [ForeignKey("OwnerRefId")]
+        public virtual ApplicationUser Owner { get; set; }
 
+       
     }
 }

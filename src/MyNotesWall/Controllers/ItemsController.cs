@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MyNotesWall.Data;
 using MyNotesWall.Models;
 
@@ -7,14 +9,17 @@ using MyNotesWall.Models;
 
 namespace MyNotesWall.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
 
         private ItemsRepository itemsRespository;
+        private IHttpContextAccessor httpContextAccessor;
 
-        public ItemsController(ItemsDbContext _db)
+        public ItemsController(ItemsDbContext _db, IHttpContextAccessor httpContextAccessor)
         {
-            this.itemsRespository = new ItemsRepository(_db);
+            this.itemsRespository = new ItemsRepository(_db, httpContextAccessor);
+            this.httpContextAccessor = httpContextAccessor;
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -42,6 +47,7 @@ namespace MyNotesWall.Controllers
         
         public IActionResult CreateItem(Item model)
         {
+        
             if (ModelState.IsValid)
             {
                 itemsRespository.CreateItem(model);
@@ -54,6 +60,7 @@ namespace MyNotesWall.Controllers
             itemsRespository.DeleteItem(id);
             return RedirectToAction("List");
         }
+
         public IActionResult QuickNote(ListPageModel pageModel)
         {
             return RedirectToAction("CreateItem", pageModel.Model);

@@ -5,14 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyNotesWall.Interfaces;
 using MyNotesWall.Data;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace MyNotesWall.Models
 { 
     public class ItemsRepository:IItemRepository
     {
         private ItemsDbContext _db;
-        public ItemsRepository(ItemsDbContext db)
+        private IHttpContextAccessor httpContextAccessor;
+        public ItemsRepository(ItemsDbContext db, IHttpContextAccessor httpContextAccessor)
         {
+            this.httpContextAccessor = httpContextAccessor;
             _db = db;
         }
         public IEnumerable<Item> GetUserItems(int id)
@@ -30,15 +34,18 @@ namespace MyNotesWall.Models
         public void CreateItem(Item item)
         {
             item.CreatedAt = DateTime.Now;
+            item.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             _db.Add(item);
             _db.SaveChanges();
         }
 
         public ListPageModel GetItemsListAndModel()
         {
-            ListPageModel pageModel= new ListPageModel();
-            pageModel.List = GetItemsList();
-            pageModel.Model = new Item();
+            ListPageModel pageModel = new ListPageModel()
+            {
+                List = GetItemsList(),
+                Model = new Item()
+            };
             return pageModel;
 
         }
@@ -49,6 +56,7 @@ namespace MyNotesWall.Models
             _db.Remove(item);
             _db.SaveChanges();
         }
+        
         public Item GetItemModel()
         {
             return new Item();
