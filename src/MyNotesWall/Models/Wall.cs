@@ -11,16 +11,19 @@ namespace MyNotesWall.Models
     {
         public Wall()
         {
-            Items = new HashSet<Item>();
-            UsersWithAccess = new HashSet<ApplicationUser>();
+          
+            UserWallItems = new HashSet<UserWallItem>();
         }
-        int WallId { get; set; }
-        [Required]
-        string Name { get; set; }
-        string OwnerID { get; set; }
 
-        public virtual ICollection<Item> Items { get; set; }
-        public virtual ICollection<ApplicationUser> UsersWithAccess { get; set; }
+        
+        public int WallId { get; set; }
+
+        public string Name { get; set; }
+        public string OwnerID { get; set; }
+
+
+        public virtual UserWallItem UserWallItem { get; set; }
+        public virtual ICollection<UserWallItem> UserWallItems { get; set; }
         
     }
 }

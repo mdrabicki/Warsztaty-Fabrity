@@ -9,13 +9,15 @@ namespace MyNotesWall.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+
         public ApplicationUser()
         {
-            Walls = new HashSet<Wall>();
-            Items = new HashSet<Item>();
+            UserWallItems = new HashSet<UserWallItem>();
         }
-        public virtual ICollection<Wall> Walls { get; set; }
-        public virtual ICollection<Item> Items { get; set; }
+
+        public virtual UserWallItem UserWallItem { get; set; }
+        public ICollection<UserWallItem> UserWallItems { get; set; }
+ 
 
     }
 }

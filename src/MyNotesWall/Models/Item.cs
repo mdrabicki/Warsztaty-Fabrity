@@ -10,6 +10,7 @@ namespace MyNotesWall.Models
 {
     public class Item
     {
+        
         public int ItemId { get; set; }
         [StringLength(160),MinLength(5), Required(ErrorMessage = "Pole nie może zostać puste"),Display(Name = "Title")]
         public string Title { get; set; }
@@ -20,11 +21,15 @@ namespace MyNotesWall.Models
         public int CategoryId { get; set; }
         public int WallID { get; set; }
         
-        [ForeignKey("WallRefId")]
+
         public virtual Wall Wall { get; set; }
-        [ForeignKey("OwnerRefId")]
+        
         public virtual ApplicationUser Owner { get; set; }
 
-       
+        public virtual UserWallItem UserWallItem { get; set; }
+        public ICollection<UserWallItem> UserWallItems { get; set; }
+
+
+
     }
 }

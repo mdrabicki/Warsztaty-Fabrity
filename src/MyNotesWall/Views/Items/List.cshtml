@@ -14,7 +14,7 @@
             @foreach (var item in Model.List)
             {
               <div class="bordered">
-                <form asp-action="DeleteItem" asp-route-id="@item.Id">
+                <form asp-action="DeleteItem" asp-route-id="@item.ItemId">
 
                         <p>
                             @Html.DisplayFor(modelItem => item.Title)  @Html.DisplayFor(modelItem => item.CreatedAt, "{0:dd/MM/yyyy}")      <input type="submit" value="usun">

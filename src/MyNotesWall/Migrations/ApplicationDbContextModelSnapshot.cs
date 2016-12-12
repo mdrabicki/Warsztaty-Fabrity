@@ -1,40 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MyNotesWall.Data;
 
-namespace MyNotesWall.Data.Migrations
+namespace MyNotesWall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc3")
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -106,8 +105,6 @@ namespace MyNotesWall.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -126,9 +123,10 @@ namespace MyNotesWall.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Autentykacja2.Models.ApplicationUser", b =>
+            modelBuilder.Entity("MyNotesWall.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -136,7 +134,7 @@ namespace MyNotesWall.Data.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -145,10 +143,10 @@ namespace MyNotesWall.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -161,7 +159,9 @@ namespace MyNotesWall.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
+
+                    b.Property<int?>("UserWallItemId");
 
                     b.HasKey("Id");
 
@@ -172,7 +172,83 @@ namespace MyNotesWall.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
+                    b.HasIndex("UserWallItemId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.Item", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CategoryId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("OwnerId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int?>("UserWallItemId");
+
+                    b.Property<int>("WallID");
+
+                    b.HasKey("ItemId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("UserWallItemId");
+
+                    b.HasIndex("WallID");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.UserWallItem", b =>
+                {
+                    b.Property<int>("UserWallItemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ItemId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int?>("WallId");
+
+                    b.HasKey("UserWallItemId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WallId");
+
+                    b.ToTable("UserWallItems");
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.Wall", b =>
+                {
+                    b.Property<int>("WallId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OwnerID");
+
+                    b.Property<int?>("UserWallItemId");
+
+                    b.HasKey("WallId");
+
+                    b.HasIndex("UserWallItemId");
+
+                    b.ToTable("Walls");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -185,7 +261,7 @@ namespace MyNotesWall.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Autentykacja2.Models.ApplicationUser")
+                    b.HasOne("MyNotesWall.Models.ApplicationUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -193,7 +269,7 @@ namespace MyNotesWall.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Autentykacja2.Models.ApplicationUser")
+                    b.HasOne("MyNotesWall.Models.ApplicationUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -206,10 +282,55 @@ namespace MyNotesWall.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Autentykacja2.Models.ApplicationUser")
+                    b.HasOne("MyNotesWall.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("MyNotesWall.Models.UserWallItem", "UserWallItem")
+                        .WithMany("Users")
+                        .HasForeignKey("UserWallItemId");
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.Item", b =>
+                {
+                    b.HasOne("MyNotesWall.Models.ApplicationUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.HasOne("MyNotesWall.Models.UserWallItem", "UserWallItem")
+                        .WithMany("Items")
+                        .HasForeignKey("UserWallItemId");
+
+                    b.HasOne("MyNotesWall.Models.Wall", "Wall")
+                        .WithMany()
+                        .HasForeignKey("WallID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.UserWallItem", b =>
+                {
+                    b.HasOne("MyNotesWall.Models.Item", "Item")
+                        .WithMany("UserWallItems")
+                        .HasForeignKey("ItemId");
+
+                    b.HasOne("MyNotesWall.Models.ApplicationUser", "User")
+                        .WithMany("UserWallItems")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("MyNotesWall.Models.Wall", "Wall")
+                        .WithMany("UserWallItems")
+                        .HasForeignKey("WallId");
+                });
+
+            modelBuilder.Entity("MyNotesWall.Models.Wall", b =>
+                {
+                    b.HasOne("MyNotesWall.Models.UserWallItem", "UserWallItem")
+                        .WithMany("Walls")
+                        .HasForeignKey("UserWallItemId");
                 });
         }
     }
