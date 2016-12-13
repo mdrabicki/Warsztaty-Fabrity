@@ -12,18 +12,18 @@ namespace MyNotesWall.Models
         public Wall()
         {
           
-            UserWallItems = new HashSet<UserWallItem>();
+        //    UserWallItems = new HashSet<UserWallItem>();
         }
 
         
         public int WallId { get; set; }
 
         public string Name { get; set; }
-        public string OwnerID { get; set; }
+  //      public string OwnerID { get; set; }
 
 
-        public virtual UserWallItem UserWallItem { get; set; }
-        public virtual ICollection<UserWallItem> UserWallItems { get; set; }
+ //       public virtual UserWallItem UserWallItem { get; set; }
+   //     public virtual ICollection<UserWallItem> UserWallItems { get; set; }
         
     }
 }

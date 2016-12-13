@@ -19,38 +19,42 @@ namespace MyNotesWall.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-          /*  builder.Entity<UserWallItem>()
-                .HasKey(x => new { x.Item, x.Wall,x.User}); */
-            builder.Entity<ApplicationUser>()
-                .HasMany(x => x.UserWallItems)
-                .WithOne(x=>x.User)
-                .IsRequired(false);
-            builder.Entity<Wall>()
-                .HasMany(x => x.UserWallItems)
-                .WithOne(x=>x.Wall)
-                .IsRequired(false);
-            builder.Entity<Item>()
-                 .HasMany(x => x.UserWallItems)
-                 .WithOne(x => x.Item)
-                 .IsRequired(false);
-            builder.Entity<UserWallItem>()
-                .HasMany(x => x.Walls)
-                .WithOne(x=>x.UserWallItem)
-                .IsRequired(false);
-            builder.Entity<UserWallItem>()
-                .HasMany(x => x.Items)
-                .WithOne(x=>x.UserWallItem)
-                .IsRequired(false);
-            builder.Entity<UserWallItem>()
-                .HasMany(x => x.Users)
-                .WithOne(x=>x.UserWallItem)
-                .IsRequired(false);
-           
+
+
+            
+          // builder.Entity<UserWallItem>()
+             //  .HasKey(x => new {x.WallId, x.ItemId, x.UserId });
+            /*     builder.Entity<ApplicationUser>()
+                     .HasMany(x => x.UserWallItems)
+                     .WithOne(x=>x.User)
+                     .IsRequired(false);
+                 builder.Entity<Wall>()
+                     .HasMany(x => x.UserWallItems)
+                     .WithOne(x=>x.Wall)
+                     .IsRequired(false);
+                 builder.Entity<Item>()
+                      .HasMany(x => x.UserWallItems)
+                      .WithOne(x => x.Item)
+                      .IsRequired(false);
+                 builder.Entity<UserWallItem>()
+                     .HasMany(x => x.Walls)
+                     .WithOne(x=>x.UserWallItem)
+                     .IsRequired(false);
+                 builder.Entity<UserWallItem>()
+                     .HasMany(x => x.Items)
+                     .WithOne(x=>x.UserWallItem)
+                     .IsRequired(false);
+                 builder.Entity<UserWallItem>()
+                     .HasMany(x => x.Users)
+                     .WithOne(x=>x.UserWallItem)
+                     .IsRequired(false);
+                */
 
 
         }

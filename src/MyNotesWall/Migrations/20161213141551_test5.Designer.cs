@@ -8,9 +8,10 @@ using MyNotesWall.Data;
 namespace MyNotesWall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161213141551_test5")]
+    partial class test5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -210,11 +211,11 @@ namespace MyNotesWall.Migrations
                     b.Property<int>("UserWallItemId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ItemId");
+                    b.Property<int>("ItemId");
 
                     b.Property<string>("UserId");
 
-                    b.Property<int?>("WallId");
+                    b.Property<int>("WallId");
 
                     b.HasKey("UserWallItemId");
 
@@ -298,7 +299,8 @@ namespace MyNotesWall.Migrations
                 {
                     b.HasOne("MyNotesWall.Models.Item", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MyNotesWall.Models.ApplicationUser", "User")
                         .WithMany()
@@ -306,7 +308,8 @@ namespace MyNotesWall.Migrations
 
                     b.HasOne("MyNotesWall.Models.Wall", "Wall")
                         .WithMany()
-                        .HasForeignKey("WallId");
+                        .HasForeignKey("WallId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MyNotesWall.Models.Wall", b =>

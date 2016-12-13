@@ -17,17 +17,19 @@ namespace MyNotesWall.Models
         public string Content { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CreatedAt { get; set; }
-        public string UserId { get; set; }
         public int CategoryId { get; set; }
+
+
+
+
+        public string OwnerId { get; set; }
         public int WallID { get; set; }
-        
 
-        public virtual Wall Wall { get; set; }
-        
-        public virtual ApplicationUser Owner { get; set; }
 
-        public virtual UserWallItem UserWallItem { get; set; }
-        public ICollection<UserWallItem> UserWallItems { get; set; }
+        //    public virtual Wall Wall { get; set; }
+        //  public virtual ApplicationUser Owner { get; set; }
+        //  public virtual UserWallItem UserWallItem { get; set; }
+        //  public ICollection<UserWallItem> UserWallItems { get; set; }
 
 
 

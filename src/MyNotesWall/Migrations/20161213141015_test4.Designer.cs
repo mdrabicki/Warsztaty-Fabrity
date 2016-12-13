@@ -8,9 +8,10 @@ using MyNotesWall.Data;
 namespace MyNotesWall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161213141015_test4")]
+    partial class test4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -161,7 +162,11 @@ namespace MyNotesWall.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int?>("UserWallItemId");
+                    b.Property<int?>("UserWallItemItemId");
+
+                    b.Property<string>("UserWallItemUserId");
+
+                    b.Property<int?>("UserWallItemWallId");
 
                     b.HasKey("Id");
 
@@ -172,7 +177,7 @@ namespace MyNotesWall.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.HasIndex("UserWallItemId");
+                    b.HasIndex("UserWallItemWallId", "UserWallItemItemId", "UserWallItemUserId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -194,35 +199,36 @@ namespace MyNotesWall.Migrations
                         .IsRequired()
                         .HasMaxLength(160);
 
-                    b.Property<int?>("UserWallItemId");
+                    b.Property<int?>("UserWallItemItemId");
+
+                    b.Property<string>("UserWallItemUserId");
+
+                    b.Property<int?>("UserWallItemWallId");
 
                     b.Property<int>("WallID");
 
                     b.HasKey("ItemId");
 
-                    b.HasIndex("UserWallItemId");
+                    b.HasIndex("UserWallItemWallId", "UserWallItemItemId", "UserWallItemUserId");
 
                     b.ToTable("Items");
                 });
 
             modelBuilder.Entity("MyNotesWall.Models.UserWallItem", b =>
                 {
-                    b.Property<int>("UserWallItemId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("WallId");
 
-                    b.Property<int?>("ItemId");
+                    b.Property<int>("ItemId");
 
                     b.Property<string>("UserId");
 
-                    b.Property<int?>("WallId");
+                    b.Property<int>("UserWallItemId");
 
-                    b.HasKey("UserWallItemId");
+                    b.HasKey("WallId", "ItemId", "UserId");
 
                     b.HasIndex("ItemId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("WallId");
 
                     b.ToTable("UserWallItems");
                 });
@@ -234,11 +240,15 @@ namespace MyNotesWall.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("UserWallItemId");
+                    b.Property<int?>("UserWallItemItemId");
+
+                    b.Property<string>("UserWallItemUserId");
+
+                    b.Property<int?>("UserWallItemWallId");
 
                     b.HasKey("WallId");
 
-                    b.HasIndex("UserWallItemId");
+                    b.HasIndex("UserWallItemWallId", "UserWallItemItemId", "UserWallItemUserId");
 
                     b.ToTable("Walls");
                 });
@@ -284,36 +294,39 @@ namespace MyNotesWall.Migrations
                 {
                     b.HasOne("MyNotesWall.Models.UserWallItem")
                         .WithMany("Users")
-                        .HasForeignKey("UserWallItemId");
+                        .HasForeignKey("UserWallItemWallId", "UserWallItemItemId", "UserWallItemUserId");
                 });
 
             modelBuilder.Entity("MyNotesWall.Models.Item", b =>
                 {
                     b.HasOne("MyNotesWall.Models.UserWallItem")
                         .WithMany("Items")
-                        .HasForeignKey("UserWallItemId");
+                        .HasForeignKey("UserWallItemWallId", "UserWallItemItemId", "UserWallItemUserId");
                 });
 
             modelBuilder.Entity("MyNotesWall.Models.UserWallItem", b =>
                 {
                     b.HasOne("MyNotesWall.Models.Item", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MyNotesWall.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MyNotesWall.Models.Wall", "Wall")
                         .WithMany()
-                        .HasForeignKey("WallId");
+                        .HasForeignKey("WallId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MyNotesWall.Models.Wall", b =>
                 {
                     b.HasOne("MyNotesWall.Models.UserWallItem")
                         .WithMany("Walls")
-                        .HasForeignKey("UserWallItemId");
+                        .HasForeignKey("UserWallItemWallId", "UserWallItemItemId", "UserWallItemUserId");
                 });
         }
     }

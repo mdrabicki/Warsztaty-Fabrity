@@ -34,7 +34,13 @@ namespace MyNotesWall.Models
         public void CreateItem(Item item)
         {
             item.CreatedAt = DateTime.Now;
-            item.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+         //   UserWallItem userWallItem = new UserWallItem();
+         //   userWallItem.User.Id = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+         item.OwnerId= httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //  userWallItem.Wall.WallId = 1;
+            //  userWallItem.Item = item;
+            item.WallID = 1;
+
             _db.Add(item);
             _db.SaveChanges();
         }

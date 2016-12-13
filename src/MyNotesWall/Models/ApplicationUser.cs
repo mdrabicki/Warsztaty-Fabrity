@@ -12,11 +12,11 @@ namespace MyNotesWall.Models
 
         public ApplicationUser()
         {
-            UserWallItems = new HashSet<UserWallItem>();
+          //  UserWallItems = new HashSet<UserWallItem>();
         }
 
-        public virtual UserWallItem UserWallItem { get; set; }
-        public ICollection<UserWallItem> UserWallItems { get; set; }
+       // public virtual UserWallItem UserWallItem { get; set; }
+      //  public ICollection<UserWallItem> UserWallItems { get; set; }
  
 
     }

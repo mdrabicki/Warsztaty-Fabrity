@@ -8,9 +8,10 @@ using MyNotesWall.Data;
 namespace MyNotesWall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161213130137_test2")]
+    partial class test2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -188,15 +189,11 @@ namespace MyNotesWall.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("OwnerId");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(160);
 
                     b.Property<int?>("UserWallItemId");
-
-                    b.Property<int>("WallID");
 
                     b.HasKey("ItemId");
 
