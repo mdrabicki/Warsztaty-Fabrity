@@ -13,9 +13,8 @@ namespace MyNotesWall.Models
 
         public UserWallItem()
         {
-            Wall = new Wall();
-            User = new ApplicationUser();
-            Item = new Item();
+            
+        
         }
       /*  public int WallId { get; set; }
         public int ItemId { get; set; }
