@@ -1,70 +1,153 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MyNotesWall.Data;
 using MyNotesWall.Models;
 
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MyNotesWall.Controllers
 {
-    [Authorize]
     public class ItemsController : Controller
     {
+        private readonly ApplicationDbContext _context;
 
-        private ItemsRepository itemsRespository;
-        private IHttpContextAccessor httpContextAccessor;
+        public ItemsController(ApplicationDbContext context)
+        {
+            _context = context;    
+        }
 
-        public ItemsController(ApplicationDbContext _db, IHttpContextAccessor httpContextAccessor)
+        // GET: Items
+        public async Task<IActionResult> Index()
         {
-            this.itemsRespository = new ItemsRepository(_db, httpContextAccessor);
-            this.httpContextAccessor = httpContextAccessor;
+            return View(await _context.Items.ToListAsync());
         }
-        // GET: /<controller>/
-        public IActionResult Index()
+
+        // GET: Items/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            
-            return RedirectToAction("List");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Items
+                .SingleOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
         }
-        public IActionResult List()
+
+        // GET: Items/Create
+        public IActionResult Create()
         {
-            
-            return View(itemsRespository.GetItemsListAndModel());
+            return View();
         }
-       // [HttpGet]
-        public IActionResult EditItem(Item model)
+
+        // POST: Items/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title,Content,CategoryId,WallID")] Item item)
         {
-       
-           
-           return View();
-        }
-        
-        public IActionResult NewMessageForm(Item model)
-        {
-            return View(model);
-        }
-        
-        public IActionResult CreateItem(Item model)
-        {
-        
             if (ModelState.IsValid)
             {
-                itemsRespository.CreateItem(model);
-                return RedirectToAction("List");
+                _context.Add(item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("NewMessageForm",model);
-        }
-        public IActionResult DeleteItem(int id)
-        {
-            itemsRespository.DeleteItem(id);
-            return RedirectToAction("List");
+            return View(item);
         }
 
-        public IActionResult QuickNote(ListPageModel pageModel)
+        // GET: Items/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            return RedirectToAction("CreateItem", pageModel.Model);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Items.SingleOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
         }
 
+        // POST: Items/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Content")] Item item)
+        {
+            if (id != item.ItemId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(item);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ItemExists(item.ItemId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            return View(item);
+        }
+
+        // GET: Items/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Items
+                .SingleOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
+        // POST: Items/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var item = await _context.Items.SingleOrDefaultAsync(m => m.ItemId == id);
+            _context.Items.Remove(item);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        private bool ItemExists(int id)
+        {
+            return _context.Items.Any(e => e.ItemId == id);
+        }
     }
 }
