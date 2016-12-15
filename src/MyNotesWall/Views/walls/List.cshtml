@@ -1,0 +1,26 @@
+﻿@model List<MyNotesWall.Models.Wall>
+
+
+<html>
+<body>
+
+    @foreach (var wall in Model)
+            {
+        <div class="bordered">
+            <form asp-action="DeleteItem" asp-route-id="@wall.WallId">
+
+                <p>
+                    @Html.DisplayFor(modelItem => wall.Name)
+                    <input type="submit" value="usun">
+
+
+
+
+            </form>
+        </div>
+
+                <br />
+    }
+
+</body>
+</html>

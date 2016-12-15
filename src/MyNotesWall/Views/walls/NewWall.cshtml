@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model MyNotesWall.Models.Wall
+
+<html>
+<body>
+    <br />
+        <form asp-action="CreateWall" name="Title">
+            <div class="form-group">
+                <label> Title</label>
+                
+              @*  @Html.ValidationMessageFor(m => m.Title) *@
+                @Html.TextBoxFor(m => m.Name)
+                <span asp-validation-for="Title" class="text-danger"> </span>
+            </div>
+           
+            <input type="submit" />
+        </form>
+</body>
+</html>

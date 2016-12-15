@@ -25,7 +25,7 @@ namespace MyNotesWall.Controllers
         public IActionResult Index()
         {
             
-            return View();
+            return RedirectToAction("List");
         }
         public IActionResult List()
         {

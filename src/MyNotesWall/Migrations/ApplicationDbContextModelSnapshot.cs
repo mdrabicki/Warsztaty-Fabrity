@@ -161,8 +161,6 @@ namespace MyNotesWall.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int?>("UserWallItemId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -171,8 +169,6 @@ namespace MyNotesWall.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
-
-                    b.HasIndex("UserWallItemId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -194,13 +190,9 @@ namespace MyNotesWall.Migrations
                         .IsRequired()
                         .HasMaxLength(160);
 
-                    b.Property<int?>("UserWallItemId");
-
                     b.Property<int>("WallID");
 
                     b.HasKey("ItemId");
-
-                    b.HasIndex("UserWallItemId");
 
                     b.ToTable("Items");
                 });
@@ -234,11 +226,7 @@ namespace MyNotesWall.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("UserWallItemId");
-
                     b.HasKey("WallId");
-
-                    b.HasIndex("UserWallItemId");
 
                     b.ToTable("Walls");
                 });
@@ -280,20 +268,6 @@ namespace MyNotesWall.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MyNotesWall.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("MyNotesWall.Models.UserWallItem")
-                        .WithMany("Users")
-                        .HasForeignKey("UserWallItemId");
-                });
-
-            modelBuilder.Entity("MyNotesWall.Models.Item", b =>
-                {
-                    b.HasOne("MyNotesWall.Models.UserWallItem")
-                        .WithMany("Items")
-                        .HasForeignKey("UserWallItemId");
-                });
-
             modelBuilder.Entity("MyNotesWall.Models.UserWallItem", b =>
                 {
                     b.HasOne("MyNotesWall.Models.Item", "Item")
@@ -307,13 +281,6 @@ namespace MyNotesWall.Migrations
                     b.HasOne("MyNotesWall.Models.Wall", "Wall")
                         .WithMany()
                         .HasForeignKey("WallId");
-                });
-
-            modelBuilder.Entity("MyNotesWall.Models.Wall", b =>
-                {
-                    b.HasOne("MyNotesWall.Models.UserWallItem")
-                        .WithMany("Walls")
-                        .HasForeignKey("UserWallItemId");
                 });
         }
     }

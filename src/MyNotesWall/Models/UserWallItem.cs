@@ -24,8 +24,8 @@ namespace MyNotesWall.Models
         public virtual ApplicationUser User { get; set; }
         public virtual Item Item { get; set; }
 
-        public virtual ICollection<Wall> Walls { get; set; }
+  /*      public virtual ICollection<Wall> Walls { get; set; }
         public virtual ICollection<Item> Items { get; set; }
-        public virtual ICollection<ApplicationUser> Users { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; } */
     }
 }

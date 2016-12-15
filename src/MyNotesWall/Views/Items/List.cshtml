@@ -17,7 +17,10 @@
                 <form asp-action="DeleteItem" asp-route-id="@item.ItemId">
 
                         <p>
-                            @Html.DisplayFor(modelItem => item.Title)  @Html.DisplayFor(modelItem => item.CreatedAt, "{0:dd/MM/yyyy}")      <input type="submit" value="usun">
+                            @Html.DisplayFor(modelItem => item.Title)  
+                            @Html.DisplayFor(modelItem => item.CreatedAt, "{0:dd/MM/yyyy}")      
+                            <input type="submit" value="usun">
+                            
                         </p>
                         <br />
                         @Html.DisplayFor(modelItem => item.Content)

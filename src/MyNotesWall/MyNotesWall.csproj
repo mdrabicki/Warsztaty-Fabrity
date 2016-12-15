@@ -108,6 +108,9 @@
       <Version>1.0.0-msbuild1-final</Version>
     </DotNetCliToolReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
    <Target Name="BeforePublish">
