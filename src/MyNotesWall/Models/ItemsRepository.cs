@@ -7,6 +7,7 @@ using MyNotesWall.Interfaces;
 using MyNotesWall.Data;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyNotesWall.Models
 { 
@@ -18,12 +19,6 @@ namespace MyNotesWall.Models
         {
             this.httpContextAccessor = httpContextAccessor;
             _db = db;
-        }
-        public IEnumerable<Item> GetUserItems(int id)
-        {
-            //TODO
-            return null;
-
         }
         public void EditItem(int id) {
         }
@@ -72,6 +67,16 @@ namespace MyNotesWall.Models
         public Item GetItemModel()
         {
             return new Item();
+        }
+
+        public IEnumerable<Item> GetItemsList(int? wallId)
+        {
+            if (wallId == null)
+            {
+                return _db.Items.ToList();
+                wallId=default(int);
+            }
+            return _db.Items.Where(x => x.WallID == wallId).ToList();
         }
     }
 }

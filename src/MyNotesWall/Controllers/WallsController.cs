@@ -44,7 +44,6 @@ namespace MyNotesWall.Controllers
 
             return View(wall);
         }
-
         // GET: Walls/Create
         public IActionResult Create()
         {
@@ -145,6 +144,13 @@ namespace MyNotesWall.Controllers
             _context.Walls.Remove(wall);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> ChooseActiveWall(int id)
+        {
+            var wall = await _context.Walls.SingleOrDefaultAsync(m => m.WallId == id);
+            ViewBag.ActiveWall = wall.Name;
+
+            return RedirectToAction("Index", "Items");
         }
 
         private bool WallExists(int id)

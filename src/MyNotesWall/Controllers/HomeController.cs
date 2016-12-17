@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyNotesWall.Controllers
 {
+
     public class HomeController : Controller
     {
+        
         public IActionResult Index()
         {
             return View();

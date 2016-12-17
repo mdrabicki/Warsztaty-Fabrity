@@ -1,8 +1,9 @@
-@model IEnumerable<MyNotesWall.Models.Item>
-
 @{
     ViewData["Title"] = "Index";
+    
 }
+@model IEnumerable<MyNotesWall.Models.Item>
+
 
 <style>
     .card {
@@ -28,6 +29,7 @@
         <link href="~/wwwroot/css/CardBorder.css" rel="stylesheet" type="text/css"/>
 @foreach (var item in Model)
 {
+   
     
        <div class="card">
 

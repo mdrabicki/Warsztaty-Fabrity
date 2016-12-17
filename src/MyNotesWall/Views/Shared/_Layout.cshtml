@@ -1,9 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using MyNotesWall.ViewComponents;
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - My Notes Wall</title>
+    
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -33,7 +37,13 @@
                     <li><a asp-area="" asp-controller="Items" asp-action="Index">Notatki</a></li>
                     <li><a asp-area="" asp-controller="Items" asp-action="Create">Nowa notatka</a></li>
                     <li><a asp-area="" asp-controller="Walls" asp-action="Index">Tablice</a></li>
+                   
+                      <li><div>@await Component.InvokeAsync("WallChooser", new { WallId = 0 }) </div></li>
+                     
+                    
+                    
                 </ul>
+
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>

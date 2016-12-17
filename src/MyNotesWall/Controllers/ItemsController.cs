@@ -7,24 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyNotesWall.Data;
 using MyNotesWall.Models;
+using MyNotesWall.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyNotesWall.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        IItemRepository repository;
 
-        public ItemsController(ApplicationDbContext context)
+        public ItemsController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;    
+            _context = context;
+            repository = new ItemsRepository(context,httpContextAccessor);
         }
 
         // GET: Items
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? wallId)
         {
-            return View(await _context.Items.ToListAsync());
+                return View(repository.GetItemsList(wallId));
         }
 
+      
         // GET: Items/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -58,8 +65,7 @@ namespace MyNotesWall.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(item);
-                await _context.SaveChangesAsync();
+                repository.CreateItem(item);
                 return RedirectToAction("Index");
             }
             return View(item);
